@@ -1,4 +1,5 @@
 import React from "react";
+import ReactMarkdown from "react-markdown";
 
 const NoteSaved = ({notes, createNote, activeNote, setActiveNote}) => {
 	return (
@@ -7,7 +8,7 @@ const NoteSaved = ({notes, createNote, activeNote, setActiveNote}) => {
 			{notes.map((note) => (
 				<div className={`card m-2 p-2 ${note.id === activeNote && "bg-light"}`} onClick={() => setActiveNote(note.id)}>
 					<h4>{note.title}</h4>
-					<p>{note.content}</p>
+					<ReactMarkdown>{note.content}</ReactMarkdown>
 				</div>
 			))}
 		</>

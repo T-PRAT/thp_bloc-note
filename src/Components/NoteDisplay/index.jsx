@@ -1,4 +1,5 @@
 import React from "react";
+import ReactMarkdown from "react-markdown";
 
 const NoteDisplay = ({activeNote}) => {
 	if (!activeNote){
@@ -8,7 +9,7 @@ const NoteDisplay = ({activeNote}) => {
 		<>
 			<div>
 				<h1>{activeNote.title}</h1>
-				<p>{activeNote.content}</p>
+				<ReactMarkdown>{activeNote.content}</ReactMarkdown>
 			</div>
 		</>
 	)
