@@ -1,17 +1,16 @@
-import { useState } from "react";
-
-const MarkdownInput = ({activeNote}) => {
-	const [value, setValue] = useState('');
-
-	const onChange = (event) => {
-		setValue(event.target.value);
-		return (activeNote.content = event.target.value);
-	};
-
+const MarkdownInput = ({activeNote, editNote}) => {
+	const onChange = (key, value) => {
+		editNote({
+			...activeNote,
+			[key]: value,
+		});
+	}
+	if (!activeNote)
+		return("")
 	return(
 		<>
-			<input type="text" placeholder="Titre"/>
-			<textarea type="text" placeholder="contenu" value={value} onChange={onChange} />
+			<input className="m-2" type="text" placeholder="Titre" value={activeNote.title} onChange={(e) => onChange("title", e.target.value)}/>
+			<textarea className="m-2 textarea" type="text" placeholder="contenu" value={activeNote.content} onChange={(e) => onChange("content", e.target.value)}/>
 		</>
 	);
 }

@@ -5,7 +5,7 @@ import NoteSaved from './Components/NoteSaved';
 import { Row } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
 import { useState } from 'react';
-import uuid from 'react-uuid';
+import { v4 as uuid } from 'uuid';
 
 const App = () => {
 	const [notes, setNotes] = useState([]);
@@ -14,28 +14,40 @@ const App = () => {
 	const createNote = () => {
 		const newNote = {
 			id: uuid(),
-			title: "Titre",
-			content: "Contenu",
+			title: "Nouvelle note",
+			content: "Contenu...",
 		};
+		console.log(newNote);
 		setNotes([newNote, ...notes]);
+		setActiveNote(newNote.id);
 	};
 
 	const getActiveNote = () => {
 		return notes.find((note) => note.id === activeNote);
 	}
 
+	const editNote = (editedNote) => {
+		const editedNoteArray = notes.map((note) => {
+			if(note.id === activeNote) {
+				return (editedNote);
+			}
+			return note;
+		});
+		setNotes(editedNoteArray);
+	}
+
 	return (
 		<div>
 		<Row>
-			<Col xs={2}>
+			<Col xs={2} className="border-end vh-100">
 				<NoteSaved notes={notes} createNote={createNote} activeNote={activeNote} setActiveNote={setActiveNote}/>
 			</Col>
-			<Col>
-				<Row>
-					<MarkdownInput activeNote={getActiveNote()}/>
+			<Col xs={9}>
+				<Row className='content'>
+					<NoteDisplay activeNote={getActiveNote()}/>
 				</Row>
 				<Row>
-					<NoteDisplay activeNote={getActiveNote()}/>
+					<MarkdownInput activeNote={getActiveNote()} editNote={editNote}/>
 				</Row>
 			</Col>
 		</Row>
